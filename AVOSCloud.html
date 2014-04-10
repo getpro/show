@@ -1,0 +1,84 @@
+<doctype <!DOCTYPE html>
+<html>
+<head>
+    <title>测试</title>
+    <meta charset='utf-8'/>
+    <script type="text/javascript" src="public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="av-0.3.1.min.js"></script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>姓名：</td>
+            <td><input type="text" class="name"></td>
+        </tr>
+        <tr>
+            <td>年龄：</td>
+            <td><input type="text" class="age"></td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <td><input type="text" class="sex"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" class="sub" value="提交">
+                <input type="button" class="que" value="查询">
+            </td>
+        </tr>
+    </table>
+</body>
+<script type="text/javascript">
+    AV.initialize("0fv95qhlofwmdt3lepdcpq0sh8gja38ppgkf176c78uwcxbk", "xx5z54nduzb0bp6i4ef5wgi7wsac1rc7j9peecg32yn4jvhn");
+
+    var TestObject = AV.Object.extend("TestObject");
+    var testObject = new TestObject();
+    var param = {};
+    var query = new AV.Query(TestObject);
+    $(".sub").click(function(){
+        param.name = $.trim($(".name").val());
+        param.age = $.trim($(".age").val());
+        param.sex = $.trim($(".sex").val());
+        testObject.save(param,{
+            success:function(data){
+                alert("AVOSCloud is work!");
+                console.log(data);
+            },
+            error:function(err){
+                alert("AVOSCloud is error");
+                console.log(err);
+            }
+        })
+    });
+
+    $(".que").click(function(){
+        /*query.get("53460b65e4b04f09d037b236",{
+            success:function(data){
+                alert("Query is ok!");
+                var T = {
+                    name:data.get("name"),
+                    age:data.get("age"),
+                    sex:data.get("sex")
+                }
+                console.log(T);
+            },
+            error:function(err){
+                alert("Query is wrong!");
+                console.log(err);
+            }
+        });*/
+
+        query.find({
+            success:function(results){
+                alert("Query ok!");
+                console.log(results);
+            },
+            error:function(err){
+                alert("Query wrong!");
+                console.log(err);
+            }
+        })
+
+    });
+</script>
+</html>
